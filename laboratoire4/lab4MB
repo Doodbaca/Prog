@@ -1,0 +1,507 @@
+using System;
+
+namespace Lab_fin_de_session
+{
+    class Program
+    {
+        static Random generateurNb = new Random();
+        public struct Soldat
+        {
+            public int vie;
+            public int attaque;
+            public string classe;
+            public bool Envie;
+
+            public Soldat(int _vie) : this()
+            {
+                Envie = false;
+                vie = generateurNb.Next(25, 101);
+                attaque = generateurNb.Next(20, 41);
+            }
+        }
+        public struct Monstre
+        {
+            public string Nom;
+            public Soldat[] soldats;
+            public Monstre(string _Nom) : this()
+            {
+
+                soldats = new Soldat[30];
+                Nom = _Nom;
+                int alea = 0;
+                for (int i = 0; i < 30; i++)
+                {
+
+                    soldats[i].Envie = true;
+                    alea = generateurNb.Next(1, 6);
+                    if (alea == 1)
+                    {
+                        soldats[i].classe = "PtitMoche";
+                        soldats[i].vie = generateurNb.Next(15, 20);
+                        soldats[i].attaque = generateurNb.Next(50, 60);
+                    }
+                    else if (alea == 2)
+                    {
+                        soldats[i].classe = "Léviathan";
+                        soldats[i].vie = generateurNb.Next(70, 100);
+                        soldats[i].attaque = generateurNb.Next(20, 30);
+                    }
+                    else if (alea == 3)
+                    {
+                        soldats[i].classe = "Infestator";
+                        soldats[i].vie = generateurNb.Next(20, 30);
+                        soldats[i].attaque = generateurNb.Next(40, 50);
+                    }
+                    else if (alea == 4)
+                    {
+                        soldats[i].classe = "Orc";
+                        soldats[i].vie = generateurNb.Next(50, 80);
+                        soldats[i].attaque = generateurNb.Next(40, 50);
+                    }
+                    else if (alea == 5)
+                    {
+                        soldats[i].classe = "Diablo";
+                        soldats[i].vie = generateurNb.Next(50, 80);
+                        soldats[i].attaque = generateurNb.Next(20, 80);
+                    }
+                }
+            }
+        }
+        static void Clear()
+        {
+            Console.ReadKey();
+            Console.Clear();
+        }
+        static int cptJours;
+        public struct Armee
+        {
+            public string Nom;
+            public Soldat[] soldats;
+            public int nbSoldat;
+            public Armee(string _Nom) : this()
+            {
+
+                soldats = new Soldat[15];
+                Nom = _Nom;
+                nbSoldat = 0;
+                int alea = 0;
+                for (int i = 0; i < 3; i++)
+                {
+
+                    soldats[i].Envie = true;
+                    alea = generateurNb.Next(1, 6);
+                    if (alea == 1)
+                    {
+                        soldats[i].classe = "Archer";
+                        soldats[i].vie = generateurNb.Next(50, 80);
+                        soldats[i].attaque = generateurNb.Next(80, 100);
+                    }
+                    else if (alea == 2)
+                    {
+                        soldats[i].classe = "Fantassin";
+                        soldats[i].vie = generateurNb.Next(70, 100);
+                        soldats[i].attaque = generateurNb.Next(50, 80);
+                    }
+                    else if (alea == 3)
+                    {
+                        soldats[i].classe = "Sadique";
+                        soldats[i].vie = generateurNb.Next(50, 110);
+                        soldats[i].attaque = generateurNb.Next(50, 100);
+                    }
+                    else if (alea == 4)
+                    {
+                        soldats[i].classe = "Mage";
+                        soldats[i].vie = generateurNb.Next(30, 50);
+                        soldats[i].attaque = generateurNb.Next(90, 120);
+                    }
+                    else if (alea == 5)
+                    {
+                        soldats[i].classe = "Paladin";
+                        soldats[i].vie = generateurNb.Next(90, 120);
+                        soldats[i].attaque = generateurNb.Next(30, 50);
+                    }
+                    nbSoldat++;
+                }
+            }
+        }
+        static void Choixpersonnage(ref Soldat heroprincipal)
+        {
+            int choix = 0;
+            Console.WriteLine("Choissisez votre classe aventurier");
+            Console.WriteLine("Choissisez un option ( 1 - 5 )"); ;
+            Console.WriteLine("1 - Archer");
+            Console.WriteLine("2 - Fantasin");
+            Console.WriteLine("3 - Sadique");
+            Console.WriteLine("4 - Mage");
+            Console.WriteLine("5 - Paladin");
+            choix = Convert.ToInt32(Console.ReadLine());
+            if (choix == 1)
+            {
+                heroprincipal.classe = "Archer";
+                heroprincipal.vie = generateurNb.Next(50, 80) + 50;
+                heroprincipal.attaque = generateurNb.Next(80, 100) + 50;
+            }
+            else if (choix == 2)
+            {
+                heroprincipal.classe = "Fantassin";
+                heroprincipal.vie = generateurNb.Next(70, 100) + 50;
+                heroprincipal.attaque = generateurNb.Next(50, 80) + 50;
+            }
+            else if (choix == 3)
+            {
+                heroprincipal.classe = "Sadique";
+                heroprincipal.vie = generateurNb.Next(50, 110) + 50;
+                heroprincipal.attaque = generateurNb.Next(50, 100) + 50;
+            }
+            else if (choix == 4)
+            {
+                heroprincipal.classe = "Mage";
+                heroprincipal.vie = generateurNb.Next(30, 50) + 50;
+                heroprincipal.attaque = generateurNb.Next(90, 120) + 50;
+            }
+            else if (choix == 5)
+            {
+                heroprincipal.classe = "Paladin";
+                heroprincipal.vie = generateurNb.Next(90, 120) + 50;
+                heroprincipal.attaque = generateurNb.Next(30, 50) + 50;
+            }
+            Console.WriteLine("Voici les stat de votre hero");
+            Console.WriteLine("vie : " + heroprincipal.vie);
+            Console.WriteLine("Attaque : " + heroprincipal.attaque);
+            Console.ReadKey();
+        }
+        static void Expedition(ref Armee humain)
+        {
+            int choix = 0;
+            string[] tabMonstre = { "Balrog", "Gandalf", "Sauron", "ORC", "Smaug", "DarkVADOR", "Palpatouche", "DarkMaul", "StormTrooper", "BoBAFeet", "TRex", "Voldemort", "Demon", "OptimusPrime" };
+            Console.WriteLine("Choissisez une expédition");
+            Console.WriteLine("1-Les Mines de la Moria (dit avec une voix de Nain)");
+            Console.WriteLine("2-Tatouin");
+            Console.WriteLine("3-Terres");
+            choix = Convert.ToInt32(Console.ReadLine());
+            if (choix == 1)
+            {
+                expedition(ref humain, tabMonstre, 0, 5);
+            }
+            else if (choix == 2)
+            {
+                expedition(ref humain, tabMonstre, 5, 10);
+            }
+            else if (choix == 3)
+            {
+                expedition(ref humain, tabMonstre, 10, 14);
+            }
+        }
+        static void expedition(ref Armee humain, string[] tabMonstre, int Min, int Max)
+        {
+
+            int choixSoldat = 0;
+            int vie = generateurNb.Next(50, 120);
+            int ATK = generateurNb.Next(40, 100);
+            int alea = 0;
+            bool continuer = false;
+            string nomduMonstre = tabMonstre[generateurNb.Next(Min, Max)];
+            Console.WriteLine("Vous allez vous battre contre le " + nomduMonstre);
+            Console.WriteLine("Sa vie : " + vie + " Son ATK : " + ATK);
+            Clear();
+            Console.WriteLine("Quel soldat choisisez vous envoyer");
+            while (continuer == false)
+            {
+
+
+                for (int i = 0; i < humain.nbSoldat; i++)
+                {
+                    Console.WriteLine("Soldat Numero" + i + " :");
+                    Console.WriteLine("Vie : " + humain.soldats[i].vie);
+                    Console.WriteLine("Attaque : " + humain.soldats[i].attaque);
+                }
+
+                choixSoldat = Convert.ToInt32(Console.ReadLine());
+                if (humain.soldats[choixSoldat].Envie == true)
+                {
+                    continuer = true;
+                }
+                else
+                {
+                    Console.WriteLine("Votre personnage nest pas actif");
+                }
+            }
+            if (humain.soldats[choixSoldat].vie < ATK)
+            {
+                alea = generateurNb.Next(1, 5);
+                if (alea == 1)
+                {
+                    Console.WriteLine("Votre champion est mort");
+                    humain.soldats[choixSoldat].Envie = false;
+                }
+            }
+            if (humain.soldats[choixSoldat].attaque > vie && humain.soldats[choixSoldat].Envie == true)
+            {
+
+                Console.WriteLine("Votre champion a gagner");
+                humain.soldats[choixSoldat].vie = +50;
+                humain.soldats[choixSoldat].attaque = +50;
+
+            }
+            else if (humain.soldats[choixSoldat].attaque < vie)
+            {
+                alea = generateurNb.Next(1, 6);
+                if (alea == 1 || alea == 2 || alea == 3)
+                {
+                    Console.WriteLine("Votre champion a gagner");
+                    humain.soldats[choixSoldat].vie = +50;
+                    humain.soldats[choixSoldat].attaque = +50;
+                }
+                else
+                {
+                    Console.WriteLine("Votre champion est mort");
+                    humain.soldats[choixSoldat].Envie = false;
+                }
+            }
+
+        }
+        static void RecrutementArmee(ref Armee humain)
+        {
+            int choixMenu = 0;
+            if (cptJours % 3 == 0)
+            {
+                Console.WriteLine("Vous êtes dans la phase de recrutement");
+                Console.WriteLine("Quel unité aimeriez-vous recruter?");
+                Console.WriteLine("1 - Archer");
+                Console.WriteLine("2 - Fantasin");
+                Console.WriteLine("3 - Sadique");
+                Console.WriteLine("4 - Mage");
+                Console.WriteLine("5 - Paladin");
+                choixMenu = Convert.ToInt32(Console.ReadLine());
+                if (choixMenu == 1)
+                {
+                    humain.soldats[humain.nbSoldat].classe = "Archer";
+                    humain.soldats[humain.nbSoldat].vie = generateurNb.Next(50, 80);
+                    humain.soldats[humain.nbSoldat].attaque = generateurNb.Next(80, 100);
+                    humain.soldats[humain.nbSoldat].Envie = true;
+                }
+                else if (choixMenu == 2)
+                {
+                    humain.soldats[humain.nbSoldat].classe = "Fantassin";
+                    humain.soldats[humain.nbSoldat].vie = generateurNb.Next(70, 100);
+                    humain.soldats[humain.nbSoldat].attaque = generateurNb.Next(50, 80);
+                    humain.soldats[humain.nbSoldat].Envie = true;
+                }
+                else if (choixMenu == 3)
+                {
+                    humain.soldats[humain.nbSoldat].classe = "Sadique";
+                    humain.soldats[humain.nbSoldat].vie = generateurNb.Next(50, 110);
+                    humain.soldats[humain.nbSoldat].attaque = generateurNb.Next(50, 100);
+                    humain.soldats[humain.nbSoldat].Envie = true;
+                }
+                else if (choixMenu == 4)
+                {
+                    humain.soldats[humain.nbSoldat].classe = "Mage";
+                    humain.soldats[humain.nbSoldat].vie = generateurNb.Next(30, 50);
+                    humain.soldats[humain.nbSoldat].attaque = generateurNb.Next(90, 120);
+                    humain.soldats[humain.nbSoldat].Envie = true;
+                }
+                else if (choixMenu == 5)
+                {
+                    humain.soldats[humain.nbSoldat].classe = "Paladin";
+                    humain.soldats[humain.nbSoldat].vie = generateurNb.Next(90, 120);
+                    humain.soldats[humain.nbSoldat].attaque = generateurNb.Next(30, 50);
+                    humain.soldats[humain.nbSoldat].Envie = true;
+                }
+                humain.nbSoldat++;
+            }
+        }
+
+
+        static void AfficherArmee(Armee humain)
+        {
+            for (int i = 0; i < humain.nbSoldat; i++)
+            {
+                Console.WriteLine(humain.soldats[i].classe);
+                Console.WriteLine("Attaque : " + humain.soldats[i].vie);
+                Console.WriteLine("Vie : " + humain.soldats[i].attaque);
+            }
+        }
+        static void NbJourAvantRecrutement()
+        {
+            int cptJoursRestant = 0;
+            cptJoursRestant = 3 - cptJours % 3;
+            Console.WriteLine("Recrutement disponible tous les 3 jours");
+            Console.WriteLine("Nombre de jours restant avant le prochain recrutement : " + cptJoursRestant);
+        }
+        static void NbJourAvantAttaque()
+        {
+
+            int cptJoursRestant = 0;
+            cptJoursRestant = 5 - cptJours % 5;
+            Console.WriteLine("Nombre de jours restant avant la prochaine Vague de monstre : " + cptJoursRestant);
+        }
+        static bool VaguedeMonstre(ref Armee Humain, ref Monstre monstre)
+        {
+            int cpt = 3;
+            int totalVieMonstre = 0;
+            int totalATKMonstre = 0;
+            int totalVieHumain = 0;
+            int totalATKHumain = 0;
+            bool Win = true;
+            int i = 0;
+            if (cptJours >= 5 && cptJours % 5 == 0)
+            {
+
+                Console.WriteLine("!!!LE CAMP EST ATTAQUÉ!!!");
+                Clear();
+                for (i = 0; i < cpt; i++)
+                {
+                    if (monstre.soldats[i].Envie == true)
+                    {
+                        totalATKMonstre += monstre.soldats[i].attaque;
+                        totalVieMonstre += monstre.soldats[i].vie;
+                    }
+                }
+                for (i = 0; i < Humain.nbSoldat; i++)
+                {
+                    if (Humain.soldats[i].Envie == true)
+                    {
+                        totalATKHumain += Humain.soldats[i].attaque;
+                        totalVieHumain += Humain.soldats[i].vie;
+                    }
+                }
+
+                if (totalATKHumain > totalVieMonstre)
+                {
+                    for (i = 0; i < cpt; i++)
+                    {
+                        monstre.soldats[i].Envie = false;
+                    }
+                    Console.WriteLine("Vous avez Gagner contre cette vague de monstre");
+                }
+                else if (totalATKMonstre > totalVieHumain)
+                {
+                    for (i = 0; i < Humain.nbSoldat; i++)
+                    {
+                        Humain.soldats[i].vie -= 50;
+                        if (Humain.soldats[i].vie >= 0)
+                        {
+                            Humain.soldats[i].Envie = false;
+                        }
+                        Console.WriteLine("Vous avez perdu contre cette vague de monstre");
+                    }
+                }
+
+
+                cpt++;
+                cpt++;
+            }
+            i = 0;
+            while (Win == true && i < 30)
+            {
+                if (monstre.soldats[i].Envie == true)
+                {
+                    Win = false;
+                }
+                else
+                {
+                    i++;
+                }
+            }
+            return Win;
+        }
+        static void AttaquerMonstre(ref Armee Humain, ref Monstre monstre)
+        {
+            int totalVieMonstre = 0;
+            int totalATKMonstre = 0;
+            int totalVieHumain = 0;
+            int totalATKHumain = 0;
+            int i = 0;
+            for (i = 0; i < monstre.soldats.Length; i++)
+            {
+                if (monstre.soldats[i].Envie == true)
+                {
+                    totalATKMonstre += monstre.soldats[i].attaque;
+                    totalVieMonstre += monstre.soldats[i].vie;
+                }
+            }
+            for (i = 0; i < Humain.nbSoldat; i++)
+            {
+                if (Humain.soldats[i].Envie == true)
+                {
+                    totalATKHumain += Humain.soldats[i].attaque;
+                    totalVieHumain += Humain.soldats[i].vie;
+                }
+            }
+            if (totalATKHumain > totalVieMonstre)
+            {
+                Console.WriteLine("Vous avez gagner Les monstre ont été vaincu");
+            }
+            else if (totalATKMonstre > totalVieHumain)
+            {
+                Console.WriteLine("Vous avez perdu");
+            }
+        }
+        static void BoutiqueObjet()
+        {
+           string[,] tabObjets = new string[2, 2];
+            tabObjets[0, 0] = "Épée";
+            tabObjets[0, 1] = "Arc";
+            tabObjets[1, 0] = "Bouclier";
+            tabObjets[1, 1] = "Masse";
+
+            Console.WriteLine("Bienvenue dans la boutique non fonctionnel");
+            Console.WriteLine("1 - " + tabObjets[0,0] + " 20 PO");
+            Console.WriteLine("2 - " + tabObjets[0,1] + " 25 PO");
+            Console.WriteLine("3 - " + tabObjets[1,0] + " 30 PO");
+            Console.WriteLine("4 - " + tabObjets[1,1] + " 35 PO");
+
+        }
+
+        static void AfficherMenu()
+        {
+            Console.WriteLine("Vous etes actuellement dans votre camps");
+            Console.WriteLine("Jours : " + cptJours);
+            Console.WriteLine("Choissisez un option ( 1 - 6 )"); ;
+            Console.WriteLine("1 - Partir en expédition");
+            Console.WriteLine("2 - Voir le compteur avant la prochaine attaque");
+            Console.WriteLine("3 - Voir le nombre de jours restant avant le prochain recrutement");
+            Console.WriteLine("4 - Afficher votre armée");
+            Console.WriteLine("5 - Boutique d'objets");
+            Console.WriteLine("6 - Aller attaquer le camps des monstres ( si réussi, termine le jeu )");
+            Console.WriteLine("7- Quitter le jeu (Vous perdrez votre progression");
+        }
+        static void Main(string[] args)
+        {
+            Armee humain = new Armee("rem");
+            Soldat HerosPrincipal = new Soldat();
+            bool finDePartie = false;
+            Monstre monstre = new Monstre("Zergs");
+            int choixMenu = 1;
+            Choixpersonnage(ref HerosPrincipal);
+            cptJours = 0;
+
+
+
+            while (finDePartie == false)
+            {
+
+                AfficherMenu();
+                choixMenu = Convert.ToInt32(Console.ReadLine());
+                switch (choixMenu)
+                {
+                    case 1: Expedition(ref humain); break;
+                    case 2: NbJourAvantAttaque(); break;
+                    case 3: NbJourAvantRecrutement(); break;
+                    case 4: AfficherArmee(humain); break;
+                    case 5: BoutiqueObjet();  break;
+                    case 6: AttaquerMonstre(ref humain, ref monstre); finDePartie = true; break;
+                    case 7: finDePartie = true; break;
+                }
+                cptJours++;
+                if (finDePartie == false)
+                {
+                    finDePartie = VaguedeMonstre(ref humain, ref monstre);
+                    RecrutementArmee(ref humain);
+                }
+                Clear();
+            }
+        }
+    }
+}
