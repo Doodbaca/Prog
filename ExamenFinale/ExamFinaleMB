@@ -1,0 +1,244 @@
+using System;
+
+namespace ExamFinale
+{
+    class Program
+    {
+        static Random generateurNb = new Random();
+        public struct Metaux
+        {
+            public string Nom;
+            public double Resitance;
+            public double PointDeFusion;
+            public double Poids;
+            public double Conductivite;
+            public Metaux(string _Nom) : this()
+            {
+                Nom = _Nom;
+                
+            }
+        }
+        static void StopClear()
+        {
+            Console.ReadKey();
+            Console.Clear();
+        }
+        static void EntrezValeur(ref Metaux[] tabmetaux)
+        {
+            tabmetaux[0].Nom = "Fer";
+            tabmetaux[1].Nom = "Cuivre";
+            tabmetaux[2].Nom = "Plomb";
+            tabmetaux[3].Nom = "Zinc";
+            for (int i = 0; i < 4; i++)
+            {
+                tabmetaux[i].Resitance = generateurNb.Next(1, 11);
+                tabmetaux[i].PointDeFusion = generateurNb.Next(1, 11);
+                tabmetaux[i].Poids = generateurNb.Next(1, 11);
+                tabmetaux[i].Conductivite = generateurNb.Next(1, 11);
+            }
+            
+        }
+        static void AfficherMenu()
+        {
+            Console.WriteLine("1-Connaitre le metal avec la meilleur resistance");
+            Console.WriteLine("2-Connaitre le metal avec le meilleur score");
+            Console.WriteLine("3-Savoir si un metal avec une conductivite de plus de 6");
+            Console.WriteLine("4-Creer un nouvelle aliage");
+            Console.WriteLine("5-Quitter");
+        }
+        static void TrouverMeilleurResist(Metaux[] tabmetaux,int cptmetaux)
+        {
+            int metaux = 0;
+            double meilleurResist = 0;
+            for (int i =0; i < cptmetaux; i++)
+            {
+                if (tabmetaux[i].Resitance == 5)
+                {
+                    metaux = i;
+                    meilleurResist = tabmetaux[i].Resitance;
+                }
+                else if (tabmetaux[i].Resitance >5 && tabmetaux[i].Resitance < meilleurResist)
+                {
+                    metaux = i;
+                    meilleurResist = tabmetaux[i].Resitance;
+                }
+                else if (tabmetaux[i].Resitance <5 && tabmetaux[i].Resitance > meilleurResist)
+                {
+                    metaux = i;
+                    meilleurResist = tabmetaux[i].Resitance;
+                }
+            }
+            Console.WriteLine("La plus grosse resistance est au " + tabmetaux[metaux].Nom + " et est de " + tabmetaux[metaux].Resitance);
+        }
+        static void MeilleurMoy(Metaux[] tabMetaux, int cptMetaux)
+        {
+            double moy = 0;
+            double meilleurMoy = 0;
+            int metaux = 0;
+            for (int i =0; i <cptMetaux; i++)
+            {
+                moy = tabMetaux[i].Resitance + tabMetaux[i].Poids + tabMetaux[i].PointDeFusion + tabMetaux[i].Conductivite;
+                moy /= 4;
+                if (moy == 5)
+                {
+                    metaux = i;
+                    meilleurMoy = moy;
+                }
+                else if (moy > 5 && moy < meilleurMoy)
+                {
+                    metaux = i;
+                    meilleurMoy = moy;
+                }
+                else if (moy < 5 && moy > meilleurMoy)
+                {
+                    metaux =  i;
+                    meilleurMoy = moy;
+                }
+            }
+            Console.WriteLine("La meilleur moyenne de score est le  " + tabMetaux[metaux].Nom + " avec " + meilleurMoy);
+        }
+        static void TrouverConductplusde6(Metaux[] tabMetaux, int cptMetaux)
+        {
+            bool Trouver = false;
+            int cpt = 0;
+            while (Trouver == false && cpt < cptMetaux)
+            {
+                if (tabMetaux[cpt].Conductivite > 6)
+                {
+                    Trouver = true;
+                }
+                else
+                {
+                    cpt++;
+                }
+
+                
+            }
+            if (Trouver == true) {
+                Console.WriteLine("Oui il existe un metal avec une conductiviter de plus de 6 et c`est le " + tabMetaux[cpt].Nom + " avec une conductivite de " + tabMetaux[cpt].Conductivite);
+            }
+            else
+            {
+                Console.WriteLine("Aucun metaux n`a plus de 6 en conductiviter");
+            }
+            
+        }
+        static void AffichageMetal(Metaux[] tabMetaux,int cptMetaux)
+        {
+
+            for (int i = 0; i < cptMetaux; i++) {
+                Console.WriteLine(i + "-" + tabMetaux[i].Nom);
+                Console.WriteLine("Resistance : " + tabMetaux[i].Resitance);
+                Console.WriteLine("Conductivite : " + tabMetaux[i].Conductivite);
+                Console.WriteLine("Poids: " + tabMetaux[i].Poids);
+                Console.WriteLine("Point de Fusion : " + tabMetaux[i].PointDeFusion);
+            }
+        }
+        static void ChoixMetaux(Metaux[] tabMetaux, int cptMetaux, string message,  ref int choixMetal1, ref int choixMetal2,ref double metaux1, ref double metaux2)
+        {
+            bool continuer = false;
+            AffichageMetal(tabMetaux, cptMetaux);
+            Console.WriteLine("Choissisez vos metaux pour la "+message);
+            Console.WriteLine("Metaux 1");
+            choixMetal1 = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("Metaux 2");
+            choixMetal2 = Convert.ToInt32(Console.ReadLine());
+            while (continuer == false;)
+            Console.WriteLine("Le total des pourcentage doit egaler a 100");
+            Console.WriteLine("Pourcentage du Metaux 1");
+            metaux1 = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("Pourcentage du Metaux 2");
+            metaux2 = Convert.ToInt32(Console.ReadLine());
+            if (metaux1+metaux2 == 100)
+            {
+                continuer = true;
+            }
+            else
+            {
+                Console.WriteLine("Votre pourcentage n`arrive pas a 100");
+            }
+        }
+        static void AffichageAlliage(Metaux[] tabMetaux, int cptMetaux)
+        {
+                Console.WriteLine(cptMetaux + "-" + tabMetaux[cptMetaux].Nom);
+                Console.WriteLine("Resistance : "+tabMetaux[cptMetaux].Resitance);
+                Console.WriteLine("Conductivite : "+tabMetaux[cptMetaux].Conductivite);
+                Console.WriteLine("Poids: "+tabMetaux[cptMetaux].Poids);
+                Console.WriteLine("Point de Fusion : "+tabMetaux[cptMetaux].PointDeFusion);
+            
+        }
+        static void CalculAlliage(ref Metaux[] tabMetaux,  int choixMetal1, int choixMetal2, double metaux1, double metaux2,int cptMetaux)
+        {
+            metaux1 /= 100.00;
+            metaux2 /= 100.00;
+
+
+            tabMetaux[cptMetaux].Resitance = tabMetaux[choixMetal1].Resitance * metaux1 + tabMetaux[choixMetal2].Resitance * metaux2;
+            tabMetaux[cptMetaux].Conductivite = tabMetaux[choixMetal1].Conductivite * metaux1 + tabMetaux[choixMetal2].Conductivite * metaux2;
+            tabMetaux[cptMetaux].Poids = tabMetaux[choixMetal1].Poids * metaux1 + tabMetaux[choixMetal2].Poids * metaux2;
+            tabMetaux[cptMetaux].PointDeFusion = tabMetaux[choixMetal1].PointDeFusion * metaux1 + tabMetaux[choixMetal2].PointDeFusion * metaux2;
+
+
+        }
+        static void Cote( Metaux[] tabMetaux, int cptMetaux)
+        {
+            double pointage = 0;
+            pointage = (tabMetaux[cptMetaux].Resitance - 5) + (tabMetaux[cptMetaux].Poids - 5) + (tabMetaux[cptMetaux].PointDeFusion - 5) + (tabMetaux[cptMetaux].Conductivite - 5);
+            if (pointage > 7)
+            {
+                Console.WriteLine("Cote : Faible");
+            }
+            else if (pointage <= 7 && pointage > 3.5)
+            {
+                Console.WriteLine("Cote : Moyen");
+            }
+            else if (pointage >= 3.5 && pointage < 1)
+            {
+                Console.WriteLine("Cote : Bon");
+            }
+            else if (pointage >= 1)
+            {
+                Console.WriteLine("Cote : Parfait");
+            }
+        }
+        static void CreerAlliage( ref Metaux[] tabMetaux, ref int cptMetaux)
+        {
+            int choixMetal1 = 0;
+            int choixMetal2 = 0;
+            double metaux1 = 0;
+            double metaux2 = 0;
+            Console.WriteLine("Vous allez creer un nouvelle aliage en Premier choissisez le nom");
+            tabMetaux[cptMetaux].Nom = Convert.ToString(Console.ReadLine());
+            Console.Clear();
+            ChoixMetaux(tabMetaux, cptMetaux, "Resistance",  ref choixMetal1, ref choixMetal2,ref metaux1,ref metaux2);
+            StopClear();
+            CalculAlliage(ref tabMetaux, choixMetal1, choixMetal2, metaux1, metaux2, cptMetaux);
+            AffichageAlliage(tabMetaux, cptMetaux);
+            Cote(tabMetaux, cptMetaux);
+            cptMetaux++;
+
+        }
+        static void Main(string[] args)
+        {
+            Metaux[] tabMetaux =new Metaux[20];
+            bool quitter = false;
+            int choix = 0;
+            EntrezValeur(ref tabMetaux);
+            int cptMetaux = 4;
+            while(quitter == false)
+            {
+                AfficherMenu();
+                choix = Convert.ToInt32(Console.ReadLine());
+                switch (choix)
+                {
+                    case 1: TrouverMeilleurResist(tabMetaux, cptMetaux); break;
+                    case 2: MeilleurMoy(tabMetaux, cptMetaux); break;
+                    case 3: TrouverConductplusde6(tabMetaux, cptMetaux); break;
+                    case 4: CreerAlliage(ref tabMetaux, ref cptMetaux); break;
+                    case 5:quitter = true; break;
+                }
+                StopClear();
+            }
+        }
+    }
+}
